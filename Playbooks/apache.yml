@@ -1,0 +1,27 @@
+#Use the following instructions to create to different ansible playbooks that will install appache 
+# 1 #Install Apache.
+# 2 yum install--quiet -y httpd httpd-devel
+# 3 #Copy configuration files.
+# 4 cp httpd.conf /etc/httpd/conf/httpd.conf
+# 5 cp httpd-vhosts.conf /etc/httpd/conf/httpd-vhosts.conf
+# 6 #Start Apache and configure it to run at boot.
+# 7 service httpd start
+# 8 chkconfig httpd on
+
+---
+- hosts: nodes
+  become: yes
+
+  tasks:
+  - name:  Install apache httpd
+    command: yum install--quiet -y httpd httpd-devel
+
+  - name: Copy configuration files
+    command: >
+       cp httpd.conf /etc/httpd/conf/httpd.conf
+  - command: >
+       cp httpd-vhosts.conf /etc/httpd/conf/httpd-vhosts.conf    
+
+  - name: Start apache and configure it to run at boot
+    command: service httpd start
+  - command: chkconfig httpd on 
