@@ -1,0 +1,19 @@
+---
+- hosts: nodes
+  become: yes
+
+  tasks:
+  - name: create the directory Test for testing files
+    file:
+      dest: /etc/Test
+      mode: 644
+      state: directory
+
+  - name: create the directory Lali for yaml files
+    file:
+      dest: /etc/lali
+      mode: 655
+      state: directory    
+
+      
+     
