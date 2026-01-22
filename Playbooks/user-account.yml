@@ -2,3 +2,28 @@
 - hosts:
   become: yes
   tasks:
+  
+  - name: Create a web admin user
+    user:
+      name: webadmin
+      comment: "service account"
+      state: present
+      shell: /bin/bash
+
+  - name: Create a web user account
+    user:
+      name: webuser
+      comment: "service account"
+      state: present
+      groups: webadmin
+      append: true
+      shell: /bin/bash   
+
+  - name: Create mq user 
+    user:
+      name: webuser
+      comment: "service account"
+      state: present
+      shell: /bin/bash  
+    tags:
+      - always      
