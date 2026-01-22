@@ -49,7 +49,7 @@
       mode: 0644  
     with_items:
       - src: httpd.conf
-        dest: /etc/httpd/conf/httpd.con
+        dest: /etc/httpd/conf/httpd.conf
       - src: httpd-vhosts.conf
         dest: /etc/httpd/conf/httpd-vhosts.conf
 
