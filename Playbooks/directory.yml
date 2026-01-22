@@ -5,14 +5,14 @@
   tasks:
   - name: create the directory Test for testing files
     file:
-      dest: /etc/Test
-      mode: 644
+      dest: /etc/folder
+      mode: 0654
       state: directory
 
   - name: create the directory Lali for yaml files
     file:
-      dest: /etc/lali
-      mode: 655
+      dest: /etc/doc
+      mode: 0655
       state: directory    
 
       
