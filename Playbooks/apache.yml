@@ -8,20 +8,53 @@
 # 7 service httpd start
 # 8 chkconfig httpd on
 
+# # 1st Way
+# ---
+# - hosts: nodes
+#   become: yes
+
+#   tasks:
+#   - name:  Install apache httpd
+#     command: yum install--quiet -y httpd httpd-devel
+
+#   - name: Copy configuration files
+#     command: >
+#        cp httpd.conf /etc/httpd/conf/httpd.conf
+#   - command: >
+#        cp httpd-vhosts.conf /etc/httpd/conf/httpd-vhosts.conf    
+
+#   - name: Start apache and configure it to run at boot
+#     command: service httpd start
+#   - command: chkconfig httpd on 
+
+# Second Way
+
 ---
 - hosts: nodes
-  become: yes
+  become: true
 
   tasks:
-  - name:  Install apache httpd
-    command: yum install--quiet -y httpd httpd-devel
+  - name: Install apache httpd
+    yum:
+      name: 
+       - httpd
+       - httpd-devel
 
-  - name: Copy configuration files
-    command: >
-       cp httpd.conf /etc/httpd/conf/httpd.conf
-  - command: >
-       cp httpd-vhosts.conf /etc/httpd/conf/httpd-vhosts.conf    
+  - name: copy conf files
+    copy:
+      src: "{{item.src}}"
+      dest: "{{item.dest}}"
+      owner: root
+      group: root
+      mode: 0644  
+    with_items:
+      - src: httpd.conf
+        dest: /etc/httpd/conf/httpd.con
+      - src: httpd-vhosts.conf
+        dest: /etc/httpd/conf/httpd-vhosts.conf
 
-  - name: Start apache and configure it to run at boot
-    command: service httpd start
-  - command: chkconfig httpd on 
+  - name: Make sure apache started 
+    service:
+     name: httpd
+     state: started
+     enabled: yes
